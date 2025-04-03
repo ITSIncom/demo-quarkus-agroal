@@ -1,4 +1,4 @@
-package org.example;
+package org.example.web;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
