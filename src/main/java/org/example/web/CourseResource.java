@@ -4,6 +4,7 @@ import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
 import org.example.data.model.Course;
 import org.example.data.repository.CourseRepository;
 
@@ -21,8 +22,13 @@ public class CourseResource {
     }
 
     @GET
-    public TemplateInstance index() throws SQLException {
-        List<Course> allCourses = repository.findAll();
+    public TemplateInstance index(@QueryParam("name") String name) throws SQLException {
+        List<Course> allCourses;
+        if (name == null || name.isEmpty()) {
+            allCourses = repository.findAll();
+        } else {
+            allCourses = repository.findByName(name);
+        }
         return course.data("courses", allCourses);
     }
 }
